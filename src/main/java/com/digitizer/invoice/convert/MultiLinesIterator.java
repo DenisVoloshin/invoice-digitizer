@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -18,25 +17,23 @@ public class MultiLinesIterator {
     private final int linesBatch;
     private Scanner scanner;
     private final InputStream inputStream;
-    private final CopyOnWriteArrayList<String> currentBatch;
-    private final ConcurrentLinkedQueue<CopyOnWriteArrayList<String>> batchsQueue;
+    private final ConcurrentLinkedQueue<List<String>> batchesQueue;
 
     public MultiLinesIterator(InputStream inputStream, int linesBatch) {
         this.linesBatch = linesBatch;
         this.inputStream = inputStream;
-        this.currentBatch = new CopyOnWriteArrayList<>();
-        this.batchsQueue = new ConcurrentLinkedQueue<>();
+        this.batchesQueue = new ConcurrentLinkedQueue<>();
     }
 
     /**
-     *  Creates the active iterator cursor.
+     * Creates the active iterator cursor.
      */
     public void open() {
         scanner = new Scanner(inputStream, "UTF-8");
     }
 
     /**
-     *  Close the active iterator cursor.
+     * Close the active iterator cursor.
      */
     public void close() {
         if (scanner != null) {
@@ -51,17 +48,15 @@ public class MultiLinesIterator {
      * @return the last read batch of there is not any batch return empty list.
      */
     public List<String> pullLastBatch() {
-        if (scanner != null && !currentBatch.isEmpty()) {
-            List<String> pulledBatch = new ArrayList<>(currentBatch);
-            currentBatch.clear();
-            return pulledBatch;
-
+        if (scanner != null && !batchesQueue.isEmpty()) {
+            return batchesQueue.poll();
         }
         return Collections.emptyList();
     }
 
     /**
      * Reads the next batch and puts it into the queue
+     *
      * @return return true if the next batch was read otherwise false
      */
     public boolean readNextBatch() {
@@ -69,6 +64,7 @@ public class MultiLinesIterator {
             return false;
         }
 
+        List<String> currentBatch = new ArrayList<>();
         int readLine = linesBatch;
         while (scanner.hasNext() && readLine > 0) {
             currentBatch.add(scanner.nextLine());
@@ -76,10 +72,10 @@ public class MultiLinesIterator {
         }
 
         if (currentBatch.size() == linesBatch) {
-            batchsQueue.add(currentBatch);
+            batchesQueue.add(currentBatch);
         } else if (!scanner.hasNext()) {
             //in the case we have a last batch which might have less lines
-            batchsQueue.add(currentBatch);
+            batchesQueue.add(currentBatch);
         } else {
             currentBatch.clear();
         }

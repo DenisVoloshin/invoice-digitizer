@@ -38,7 +38,6 @@ public class InvoiceIDsConvertorTest {
                 new FSInvoiceArchiveProvider(ClassLoader.getSystemResource("input_Q1a.txt").getPath()),
                 fsInvoiceExporter);
         convertor.execute();
-
         try {
             String expectedOutput = slurp(new File(ClassLoader.getSystemResource("output_Q1a.txt").getPath()));
             Assert.assertEquals(expectedOutput, fsInvoiceExporter.getExportedDataAsString());
