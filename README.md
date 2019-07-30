@@ -1,6 +1,6 @@
 # Invoice Digitizer
 
-The following project provides the solution for 7-segment display representations to regular number 
+The following project provides the conversion solution for 7-segment display representations to regular number 
 
 # Design Overview
 
