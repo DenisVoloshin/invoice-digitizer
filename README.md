@@ -9,4 +9,6 @@ The solution could be easily be extended by custom data provider and exporter to
 # 7-Segemnt convetor implemenation details  
 
 
+![](sevent-segment-table.png)
+
 
