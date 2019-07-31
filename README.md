@@ -30,5 +30,14 @@ a segment is missing or redundant
 ![](sevent-segment-table.png)
 
 
+# Run the convertor
+```groovy
+   ./gradlew clean build
+   ```
+```groovy
+  java -jar build/libs/invoice-digitizer-1.0.jar <input> <output>
+   ```
+
+
 # Java doc
 [Java doc](https://denisvoloshin.github.io/invoice-digitizer)
