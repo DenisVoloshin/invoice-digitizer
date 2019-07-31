@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gh-pages" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/javadoc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/javadoc/invoice-digitizer" vcs="Git" />
   </component>
 </project>

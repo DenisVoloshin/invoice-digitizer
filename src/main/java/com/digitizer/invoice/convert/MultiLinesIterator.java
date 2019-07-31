@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-
 /**
  * The class represents a custom iterator which allows to iterate on the
  * {@link InputStream} by returning a batches of parameterized number of rows
